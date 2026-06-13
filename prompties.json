@@ -2,7 +2,7 @@
     "ignore": [
         "node_modules",
         ".git",
-        "Promptie",
+        "Prompties",
         "package-lock.json",
         "*.png",
         "*.jpg",
@@ -10,5 +10,5 @@
     ],
     "useOnly": [],
     "maxFileSizeKb": 100,
-    "outputDir": "./Promptie"
+    "outputDir": "./Prompties"
 }

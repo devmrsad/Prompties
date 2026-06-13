@@ -2,7 +2,7 @@
 
 **Context packer for AI Chatbots**
 
-Promptie crawls your local workspace, filters out the noise, and bundles your entire codebase into a perfectly structured, AI-readable plaintext file.
+Prompties crawls your local workspace, filters out the noise, and bundles your entire codebase into a perfectly structured, AI-readable plaintext file.
 
 Say goodbye to copying and pasting dozens of files manually.
 
@@ -16,7 +16,7 @@ Say goodbye to copying and pasting dozens of files manually.
 
 - **💬 Interactive Prompts:** Inject custom instructions at the top and bottom of the context payload dynamically during execution.
 - **🌳 Auto-Generated File Tree:** Generates an ASCII folder structure so the LLM understands your project architecture *before* reading the code.
-- **🔍 Smart Filtering:** Heavily customizable via `promptie.json`. Supports global `ignore` rules and strict `useOnly` whitelists.
+- **🔍 Smart Filtering:** Heavily customizable via `prompties.json`. Supports global `ignore` rules and strict `useOnly` whitelists.
 - **🛡️ Size Guardrail:** Automatically skips massive binary or text files (like minified bundles or assets) to preserve your AI context window.
 - **📦 Clean Separation:** Wraps every file clearly with Unix-style relative paths and standard visual delimiters for maximum LLM comprehension.
 
@@ -24,7 +24,7 @@ Say goodbye to copying and pasting dozens of files manually.
 
 ## Installation & Setup
 
-You can use Promptie either by installing it directly from npm or by loading your own local copy.
+You can use Prompties either by installing it directly from npm or by loading your own local copy.
 
 ### Option A: Global Installation (From npm)
 Install the package globally on your system:
@@ -45,16 +45,16 @@ If you downloaded the source code and want to run or modify it locally without p
 
 ## How to Use
 
-Once installed or linked, the `promptie` command becomes available globally across your **entire** system.
+Once installed or linked, the `prompties` command becomes available globally across your **entire** system.
 
 ### 1. Run the Command
 Open your terminal inside the root directory of the codebase you want to bundle, and run:
 ```bash
-promptie
+prompties
 ```
 
 ### 2. Provide Interactive Flags (Terminal Prompts)
-Promptie will run interactively and ask you two questions:
+Prompties will run interactively and ask you two questions:
 * **Starting message:** Type what you want the AI to do with your code (e.g., `Review this code for memory leaks and security vulnerabilities.`).
     * * You can press **Enter** for empty.*
 * **Ending message:** Type any closing instructions or constraints (e.g., `Fix the bugs methodically, keeping performance in mind.`).
@@ -83,7 +83,7 @@ To customize how Prompties parses your codebase, create a `prompties.json` file 
   "ignore": [
     "node_modules",
     ".git",
-    "Promptie",
+    "Prompties",
     "package-lock.json",
     "*.png",
     "*.jpg",
@@ -139,7 +139,7 @@ body { margin: 0; }
 
 - **Windows Path Compatibility:** Prompties automatically forces backward slashes (`\`) into clean Unix-style forward slashes (`/`) in the output file tree and headers so LLMs don't get confused by mixed environment layouts.
 - **File Name Restrictions:** Output text files swap out standard date colons (`:`) for dashes (`-`) to ensure perfect compatibility with Windows file-naming systems.
-- **Missing Config:** If no `prompties.json` is found in the directory you run it in, Promptie safely resorts to its default fallback settings without crashing.
+- **Missing Config:** If no `prompties.json` is found in the directory you run it in, Prompties safely resorts to its default fallback settings without crashing.
 
 ---
 *Built by [Mohammadreza Sa.](https://github.com/devmrsad)*
