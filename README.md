@@ -143,4 +143,3 @@ body { margin: 0; }
 
 ---
 *Built by [Mohammadreza Sa.](https://github.com/devmrsad)*
-```
