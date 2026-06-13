@@ -1,6 +1,6 @@
 {
     "name": "@devmrsad/prompties",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "An AI context-packing CLI tool",
     "main": "index.js",
     "type": "module",
