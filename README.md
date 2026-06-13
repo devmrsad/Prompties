@@ -6,49 +6,41 @@ Prompties crawls your local workspace, filters out the noise, and bundles your e
 
 Say goodbye to copying and pasting dozens of files manually.
 
-![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
+![Version](https://img.shields.io/badge/version-0.1.4-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Node](https://img.shields.io/badge/node->=14.0.0-orange.svg)
 
 ---
 
-## Features
-
-- **💬 Interactive Prompts:** Inject custom instructions at the top and bottom of the context payload dynamically during execution.
-- **🌳 Auto-Generated File Tree:** Generates an ASCII folder structure so the LLM understands your project architecture *before* reading the code.
-- **🔍 Smart Filtering:** Heavily customizable via `prompties.json`. Supports global `ignore` rules and strict `useOnly` whitelists.
-- **🛡️ Size Guardrail:** Automatically skips massive binary or text files (like minified bundles or assets) to preserve your AI context window.
-- **📦 Clean Separation:** Wraps every file clearly with Unix-style relative paths and standard visual delimiters for maximum LLM comprehension.
-
----
-
 ## Installation & Setup
 
-You can use Prompties either by installing it directly from npm or by loading your own local copy.
+You can use Prompties either by executing it directly via `npx` or by loading your own local copy.
 
-### Option A: Global Installation (From npm)
-Install the package globally on your system:
-```bash
-npm install -g @devmrsad/prompties
-```
+### Option A: Execute via npx (Recommended)
+There is no need to install the package globally. You can run the latest version directly on the fly using `npx`. *(See the Run section below).*
 
 ### Option B: Local Link (For Developers)
 If you downloaded the source code and want to run or modify it locally without publishing:
 1. Navigate into the folder containing `package.json` and `index.js`.
 2. Run the linking command:
 ```bash
-   npm link
-   ```
-   *(Note: On macOS/Linux, you may need to use `sudo npm link` if you encounter permission errors).*
+npm link
+```
+*(Note: On macOS/Linux, you may need to use `sudo npm link` if you encounter permission errors).*
 
 ---
 
 ## How to Use
 
-Once installed or linked, the `prompties` command becomes available globally across your **entire** system.
-
 ### 1. Run the Command
-Open your terminal inside the root directory of the codebase you want to bundle, and run:
+Open your terminal inside the root directory of the codebase you want to bundle, and run one of the following depending on your setup method:
+
+**If using npx (Option A):**
+```bash
+npx @devmrsad/prompties
+```
+
+**If linked locally (Option B):**
 ```bash
 prompties
 ```
@@ -56,9 +48,9 @@ prompties
 ### 2. Provide Interactive Flags (Terminal Prompts)
 Prompties will run interactively and ask you two questions:
 * **Starting message:** Type what you want the AI to do with your code (e.g., `Review this code for memory leaks and security vulnerabilities.`).
-    * * You can press **Enter** for empty.*
+    * *You can press **Enter** for empty.*
 * **Ending message:** Type any closing instructions or constraints (e.g., `Fix the bugs methodically, keeping performance in mind.`).
-    * * Again, press **Enter** for empty.*
+    * *Again, press **Enter** for empty.*
 
 ### 3. Collect the Output
 If the execution completes with no errors, a brand new directory named `/Prompties` will be generated in your project root. Inside, you will find a cleanly timestamped text file:
