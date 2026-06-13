@@ -1,0 +1,14 @@
+{
+    "ignore": [
+        "node_modules",
+        ".git",
+        "Promptie",
+        "package-lock.json",
+        "*.png",
+        "*.jpg",
+        "*.ico"
+    ],
+    "useOnly": [],
+    "maxFileSizeKb": 100,
+    "outputDir": "./Promptie"
+}
