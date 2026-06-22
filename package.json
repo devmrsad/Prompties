@@ -1,18 +1,18 @@
 {
     "name": "@devmrsad/prompties",
-    "version": "0.1.4",
-    "description": "An AI context-packing CLI tool",
+    "version": "2.0.0",
+    "description": "An AI context-packing CLI tool with advanced filtering and metadata support",
     "main": "index.js",
     "type": "module",
     "bin": {
         "prompties": "./index.js"
     },
     "files": [
-        "index.js",
-        "prompties.json"
+        "index.js"
     ],
     "scripts": {
-        "start": "node index.js"
+        "start": "node index.js",
+        "test": "echo \"No tests specified\" && exit 0"
     },
     "keywords": [
         "ai",
@@ -21,7 +21,12 @@
         "prompt",
         "cli",
         "context-window",
-        "devtools"
+        "devtools",
+        "codebase",
+        "bundler",
+        "chatgpt",
+        "claude",
+        "gemini"
     ],
     "author": "Mohammadreza Sadeghi",
     "license": "MIT",
@@ -32,5 +37,8 @@
     "bugs": {
         "url": "https://github.com/devmrsad/prompties/issues"
     },
-    "homepage": "https://github.com/devmrsad/prompties#readme"
+    "homepage": "https://github.com/devmrsad/prompties#readme",
+    "engines": {
+        "node": ">=14.0.0"
+    }
 }
