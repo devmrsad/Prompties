@@ -1,137 +1,247 @@
 # Prompties
 
-**Context packer for AI Chatbots**
+**Context packer for AI Chatbots — now smarter, faster, and more informative.**
 
-Prompties crawls your local workspace, filters out the noise, and bundles your entire codebase into a perfectly structured, AI-readable plaintext file.
+Prompties crawls your project, respects your ignore rules, and bundles your entire codebase into an AI-optimized text prompt. Version 1.0 brings deep metadata, language detection, and powerful new configuration options — all without breaking your existing setup.
 
-Say goodbye to copying and pasting dozens of files manually.
-
-![Version](https://img.shields.io/badge/version-0.1.4-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Node](https://img.shields.io/badge/node->=14.0.0-orange.svg)
 
 ---
 
-## Installation & Setup
+## 🚀 Quick Start
 
-You can use Prompties either by executing it directly via `npx` or by loading your own local copy.
+Run Prompties instantly in any project folder — no installation needed.
 
-### Option A: Execute via npx (Recommended)
-There is no need to install the package globally. You can run the latest version directly on the fly using `npx`. *(See the Run section below).*
-
-### Option B: Local Link (For Developers)
-If you downloaded the source code and want to run or modify it locally without publishing:
-1. Navigate into the folder containing `package.json` and `index.js`.
-2. Run the linking command:
-```bash
-npm link
-```
-*(Note: On macOS/Linux, you may need to use `sudo npm link` if you encounter permission errors).*
-
----
-
-## How to Use
-
-### 1. Run the Command
-Open your terminal inside the root directory of the codebase you want to bundle, and run one of the following depending on your setup method:
-
-**If using npx (Option A):**
 ```bash
 npx @devmrsad/prompties
 ```
 
-**If linked locally (Option B):**
-```bash
-prompties
-```
-
-### 2. Provide Interactive Flags (Terminal Prompts)
-Prompties will run interactively and ask you two questions:
-* **Starting message:** Type what you want the AI to do with your code (e.g., `Review this code for memory leaks and security vulnerabilities.`).
-    * *You can press **Enter** for empty.*
-* **Ending message:** Type any closing instructions or constraints (e.g., `Fix the bugs methodically, keeping performance in mind.`).
-    * *Again, press **Enter** for empty.*
-
-### 3. Collect the Output
-If the execution completes with no errors, a brand new directory named `/Prompties` will be generated in your project root. Inside, you will find a cleanly timestamped text file:
-
-```text
-📂 Your-Project/
-└── 📂 Prompties/
-    └── 📄 2026-06-13 15-30-00.txt  <-- Your complete AI prompt is here
-```
-
-Open this file, copy its contents, and drop it straight into ChatGPT, Claude, Gemini, or any other LLM.
+That’s it. Answer the interactive prompts (or skip them) and your ready‑to‑paste prompt will appear inside a new `Prompties/` directory.
 
 ---
 
-## Configuration (`prompties.json`)
+## 📦 Alternative: Local Link (For Developers)
 
-To customize how Prompties parses your codebase, create a `prompties.json` file in the root directory of your target project.
+If you cloned the repo and want to run or modify Prompties locally:
 
-### Example Configuration File
+```bash
+npm link
+```
+
+After linking, you can run the command as `prompties` anywhere. (On macOS/Linux you might need `sudo` if you hit permission errors).
+
+---
+
+## 🧠 Usage Tutorial
+
+### 1. Basic Run
+
+Open a terminal at your project root and launch Prompties. You’ll see a friendly banner and three optional questions:
+
+```
+📝 Starting message (Enter to skip):
+> Review this code for bugs and suggest improvements.
+
+📝 Ending message (Enter to skip):
+> Keep the suggestions practical and focused.
+
+📁 Extra patterns to ignore (comma separated, Enter to skip):
+> *.log, temp/
+```
+
+- **Starting / Ending messages** – bookend the AI prompt with your instructions.
+- **Extra ignore patterns** – on‑the‑fly additions to the ignore list. Separate multiple entries with commas.
+
+All three prompts can be left empty.
+
+### 2. Output
+
+A timestamped file is saved in `./Prompties/` (configurable). Open it, copy everything, and paste directly into ChatGPT, Claude, Gemini, or any LLM.
+
+```
+📂 your-project/
+└── 📂 Prompties/
+    └── 📄 2026-06-29 14-05-23.txt   ← your ready-to-use prompt
+```
+
+### 3. Using `.promptignore`
+
+For project‑specific exclusions that shouldn’t pollute your main `prompties.json`, create a `.promptignore` file at the root. It uses the same pattern syntax as `.gitignore`:
+
+```gitignore
+# .promptignore
+*.test.js
+fixtures/
+temp-*
+```
+
+Prompties automatically picks up these patterns and merges them with the rest of the ignore list.
+
+### 4. Leveraging `.gitignore`
+
+By default, Prompties honours your existing `.gitignore` rules — no extra config needed. All patterns inside `.gitignore` are added to the ignore list, so things like `node_modules` are never accidentally bundled.
+
+If you want to disable this behaviour, set `"respectGitignore": false` in your config.
+
+### 5. Adding Metadata and Line Numbers
+
+Two new configuration switches make the output even more useful:
+
+- `addMetadata` — includes project stats (file count, sizes, language breakdown, MD5 hashes, etc.) at the top of the prompt.
+- `includeLineNumbers` — prefixes every line of code with a line number, making it easy to reference specific lines in conversations with the AI.
+
+Both can be toggled in `prompties.json` (see below).
+
+---
+
+## ⚙️ Configuration (`prompties.json`)
+
+Place a `prompties.json` file in your project root to override defaults. All keys are optional — missing values fall back to safe defaults.
+
+### Full Configuration Example
+
 ```json
 {
   "ignore": [
     "node_modules",
     ".git",
     "Prompties",
-    "package-lock.json",
-    "*.png",
-    "*.jpg",
-    "*.ico"
+    "*.log",
+    "temp/"
   ],
   "useOnly": [],
-  "maxFileSizeKb": 100,
-  "outputDir": "./Prompties"
+  "maxFileSizeKb": 200,
+  "outputDir": "./Prompties",
+  "includeHidden": false,
+  "respectGitignore": true,
+  "compressOutput": false,
+  "addMetadata": true,
+  "includeLineNumbers": false,
+  "maxDepth": 20
 }
 ```
 
-### Configuration Options Breakdown
+### Options Table
 
-| Key | Type | Description | Default Fallback |
-| :--- | :--- | :--- | :--- |
-| `ignore` | `Array` | Folder names, file names, or wildcard patterns (`*.ext`) to completely skip during compilation. | `["node_modules", ".git", "Prompties"]` |
-| `useOnly` | `Array` | **Strict Whitelist.** If populated, it overrides the `ignore` list. *Only* files matching these patterns will be collected. | `[]` |
-| `maxFileSizeKb` | `Number` | Skips any individual file larger than this limit to prevent blowing past AI token limits. | `100` |
-| `outputDir` | `String` | The target path where your compiled text files will save. | `"./Prompties"` |
+| Key | Type | Default | Description |
+|:---|:---|:---|:---|
+| `ignore` | `Array` | `["node_modules", ".git", "Prompties"]` | Files, folders, or wildcard patterns (`*.ext`) to skip. Also automatically includes entries from `.promptignore` and `.gitignore` (when `respectGitignore` is `true`). |
+| `useOnly` | `Array` | `[]` | Whitelist mode — when populated, **only** files matching these patterns are included. Overrides `ignore`. |
+| `maxFileSizeKb` | `Number` | `200` | Skip files larger than this size (in KB) to stay within AI token limits. |
+| `outputDir` | `String` | `"./Prompties"` | Where to save the generated prompt files. |
+| `includeHidden` | `Boolean` | `false` | Whether to include dotfiles (e.g., `.env`, `.gitignore`). |
+| `respectGitignore` | `Boolean` | `true` | Load and apply patterns from the project’s `.gitignore`. |
+| `compressOutput` | `Boolean` | `false` | Remove excessive blank lines from the final prompt (keeps the output compact). |
+| `addMetadata` | `Boolean` | `true` | Append a metadata block with project stats, language counts, hashes, and file sizes. |
+| `includeLineNumbers` | `Boolean` | `false` | Add line numbers to every file in the output. |
+| `maxDepth` | `Number` | `Infinity` | Maximum folder depth for traversal. Useful for very deep directory trees. |
 
 ---
 
 ## 📄 Output Template Example
 
-The generated text file formats your codebase into an optimized layout that modern LLMs are highly trained to parse:
+Here’s what a generated prompt looks like (with `addMetadata` and tree icons enabled):
 
 ```text
-[Your Interactive Starting Message Here]
+╔═══════════════════════════════════════╗
+║       PROMPTIES PROJECT DUMP        ║
+╚═══════════════════════════════════════╝
 
-Project Structure:
+Review this code for bugs and suggest improvements.
+
+📊 Metadata:
+  • Generated: 6/29/2026, 2:05:23 PM
+  • Total files scanned: 247
+  • Files processed: 189
+  • Files skipped: 58
+  • Total size: 12.45 MB
+  • File types: .js: 78, .css: 34, .json: 23, .html: 19, .md: 12
+  • Max depth: 20
+  • Max file size: 200KB
+  • Use only: all files
+  • Ignored patterns: node_modules, .git, Prompties, .promptignore, ... and 5 more
+
+📁 Project Structure:
 /
-├── src
-│   ├── index.js
-│   └── styles.css
-└── package.json
+├── 📁 src
+│   ├── 📁 components
+│   │   ├── 📄 Header.js (2.3KB)
+│   │   └── 📄 Footer.js (1.1KB)
+│   ├── 📄 index.js (4.7KB)
+│   └── 📄 styles.css (3.2KB)
+└── 📄 package.json (0.8KB)
 
-### File Contents ###
+📄 File Contents
+═══════════════════════════════════════
 
-/src/index.js
-console.log("Hello AI!");
----------------------------------------------------------------------
+📁 /src/index.js
+   Language: JavaScript | Size: 4.7KB | Hash: a1b2c3d4
+───────────────────────────────────────────
+console.log("Hello World!");
+───────────────────────────────────────────
 
-/src/styles.css
+📁 /src/styles.css
+   Language: CSS | Size: 3.2KB | Hash: f0e1d2c3
+───────────────────────────────────────────
 body { margin: 0; }
----------------------------------------------------------------------
+───────────────────────────────────────────
 
-[Your Interactive Ending Message Here]
+Keep the suggestions practical and focused.
+
+═══════════════════════════════════════
+✨ Generated by Prompties v1.0.0
+📅 2026-06-29 14:05:23
 ```
 
 ---
 
-## Troubleshooting & Notes
+## 🆕 What’s New in v1.0
 
-- **Windows Path Compatibility:** Prompties automatically forces backward slashes (`\`) into clean Unix-style forward slashes (`/`) in the output file tree and headers so LLMs don't get confused by mixed environment layouts.
-- **File Name Restrictions:** Output text files swap out standard date colons (`:`) for dashes (`-`) to ensure perfect compatibility with Windows file-naming systems.
-- **Missing Config:** If no `prompties.json` is found in the directory you run it in, Prompties safely resorts to its default fallback settings without crashing.
+This release is a massive leap from the original 0.x series. Here’s everything you’re getting:
+
+- **Smart ignore system**  
+  `.promptignore` support, automatic `.gitignore` integration, and runtime extra‑pattern input. Wildcards (`*`) now work everywhere.
+
+- **Rich metadata block**  
+  Project statistics, per‑file language detection (40+ languages), file size, MD5 hashes, and line counts — all optional.
+
+- **Line numbers**  
+  Reference code by line directly in your AI conversations.
+
+- **Better output organisation**  
+  Files are sorted by extension, and tree view now includes emoji icons and file sizes.
+
+- **New configuration options**  
+  Control hidden files, output compression, maximum depth, and more.
+
+- **Enhanced performance & error handling**  
+  Faster directory crawling, memory‑efficient processing, and graceful handling of permission errors.
+
+- **Full backward compatibility**  
+  Existing `prompties.json` files work without any changes.
 
 ---
-*Built by [Mohammadreza Sa.](https://github.com/devmrsad)*
+
+## 💡 Tips & Tricks
+
+- **Whitelist mode**: Set `"useOnly": ["*.js", "*.ts"]` to bundle only JavaScript and TypeScript files.
+- **Deep projects**: Use `"maxDepth": 5` to limit traversal and keep the prompt focused on top‑level logic.
+- **Compressed output**: Enable `"compressOutput": true` if you’re hitting AI character limits and want to strip extra blank lines.
+- **Hidden files**: Need to include a `.env.example`? Toggle `"includeHidden": true`.
+- **Per‑run ignores**: Don’t want to edit a config file? Pass patterns interactively when Prompties starts.
+
+---
+
+## 🔧 Troubleshooting
+
+- **Windows paths** – All backslashes are automatically converted to forward slashes in the output.
+- **Timestamp naming** – Colons in the file name are replaced by dashes to keep Windows happy.
+- **Missing config** – Running without `prompties.json` is completely safe; defaults kick in.
+- **Large repos** – Files larger than `maxFileSizeKb` are skipped with a note in the tree, so prompts never balloon unexpectedly.
+
+---
+
+*Maintained by [Mohammadreza Sa.](https://github.com/devmrsad)*
+*- PRs are welcome. Feel free to contribute*
